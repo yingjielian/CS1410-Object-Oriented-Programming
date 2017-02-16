@@ -52,8 +52,14 @@ public class Fraction
 		}
 	}
 
+	/**
+	 * Second constructor - initializes this object to contain the numerator
+	 * and let the denominator equal to 1.
+	 * @param n an amount of numerator value
+	 */
 	public Fraction (long n)
 	{
+		
 		this.numerator = n;
 		this.denominator = 1;
 	}

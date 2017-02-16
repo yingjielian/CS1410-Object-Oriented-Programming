@@ -1,23 +1,14 @@
 package assignment04;
-/**
- * This program is going to compute the number PI and display it within 
- * decimal and fraction form.
- * 
- * @author Yingjie Lian	
- * @version 02/15/2017
- * @class CS-1410
- *
- */
-public class Computation 
-{
+
+public class BigComputation {
 	public static void main(String[] args) 
 	{
-		// Initialize a variable within calling "Fraction" method
-		Fraction total = null;
+		// Initialize a variable within calling "BigFraction" method
+		BigFraction total = null;
 		
-		// Initialize a variable within calling "Fraction" method and store a value
+		// Initialize a variable within calling "BigFraction" method and store a value
 		// to it.
-		Fraction sum = new Fraction(0);
+		BigFraction sum = new BigFraction(0);
 		
 		// Count how many times the program runs.
 		int steps = 0;
@@ -27,16 +18,16 @@ public class Computation
 		// the value when k is 0 to infinity.
 		for (long k = 0; k < 4; k++)
 		{
-			// Declare four variables to represent the fractions.
-			Fraction first = new Fraction(4, (8*k + 1));
-			Fraction second = new Fraction(2, (8*k + 4));
-			Fraction third  = new Fraction(1, (8*k + 5));
-			Fraction fourth = new Fraction(1, (8*k + 6));
+			// Declare four variables to represent the BigFractions.
+			BigFraction first = new BigFraction(4, (8*k + 1));
+			BigFraction second = new BigFraction(2, (8*k + 4));
+			BigFraction third  = new BigFraction(1, (8*k + 5));
+			BigFraction fourth = new BigFraction(1, (8*k + 6));
 			
 			// Declare a variable to represent the coefficient 1/(16^k).
-			Fraction coefficient = new Fraction(1, (long) (Math.pow(16, k)));
+			BigFraction coefficient = new BigFraction(1, (long) (Math.pow(16, k)));
 			
-			// Call "subtract" and "multiply" methods inside "Fraction" class in order to
+			// Call "subtract" and "multiply" methods inside "BigFraction" class in order to
 			// complete the formula.
 			total = first.subtract(second).subtract(third).subtract(fourth).multiply(coefficient);
 			
@@ -49,7 +40,8 @@ public class Computation
 		System.out.println("The PI is equal to " + sum.toDouble() + ", after " + steps + 
 							" steps of the " + "computation were used to compute the result.");
 		
-		// Display the value of PI within a fraction form to the user.
+		// Display the value of PI within a BigFraction form to the user.
 		System.out.println("As a fraction, the value of PI is equal to " + sum + ".");
 	}
+
 }
