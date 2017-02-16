@@ -1,8 +1,10 @@
 package assignment04;
 
+import java.math.BigInteger;
+
 public class BigFraction 
 {
-	private long numerator, denominator;
+	private BigInteger numerator, denominator;
 
 	/**
 	 * Constructor - initializes this object to contain the numerator 
@@ -12,33 +14,38 @@ public class BigFraction
 	 * @param n  an amount of numerator value
 	 * @param d  an amount of denominator value
 	 */
-	public BigFraction (long n, long d)
+	private BigFraction (BigInteger  n, BigInteger  d)
 	{
 		// Initialize these 'long' variables.
-		long gcd, remainder, temp;
+		BigInteger gcd, remainder, temp;
 		// Store the greatest common divisor of the numerator and denominator.
-		gcd = Math.abs(n);
-		remainder = Math.abs(d);
+		gcd = n.abs();
+		remainder = d.abs();
 
-		while (remainder != 0)
+		while (remainder != BigInteger.ZERO)
 		{
 			temp = remainder;
-			remainder = gcd % remainder;
+			remainder = gcd.remainder(remainder);
 			gcd = temp;
 		}
 
 		// Just move the numbers from the parameters into the object.
 
-		if (d < 0)
+		if (d.signum() < 0)
 		{
-			this.numerator = -n / gcd;
-			this.denominator = -d / gcd;
+			this.numerator = n.negate().divide(gcd);
+			this.denominator = d.negate().divide(gcd);
 		}
 		else
 		{
-			this.numerator = n / gcd;
-			this.denominator = d / gcd;
+			this.numerator = n.divide(gcd);
+			this.denominator = d.divide(gcd);
 		}
+	}
+	
+	public BigFraction(long n , long d)
+	{
+		this(BigInteger.valueOf(n), BigInteger.valueOf(d));
 	}
 
 	/**
@@ -46,13 +53,17 @@ public class BigFraction
 	 * and let the denominator equal to 1.
 	 * @param n an amount of numerator value
 	 */
-	public BigFraction (long n)
+	private BigFraction (BigInteger  n)
 	{
 		
 		this.numerator = n;
-		this.denominator = 1;
+		this.denominator = BigInteger.ONE;
 	}
 
+	public BigFraction(long n)
+	{
+		this(BigInteger.valueOf(n));
+	}
 	/**
 	 * Returns a human-readable string representing this BigFraction. 
 	 * BigFractions have slash sign "/" between numerator and denominator.
@@ -75,7 +86,7 @@ public class BigFraction
 	 * 
 	 * @return numerator for this BigFraction
 	 */
-	public long getNumerator ()
+	public BigInteger getNumerator ()
 	{
 		return numerator;
 	} 
@@ -85,7 +96,7 @@ public class BigFraction
 	 * 
 	 * @return denominator for this BigFraction
 	 */
-	public long getDenominator ()
+	public BigInteger getDenominator ()
 	{
 		return denominator;
 	}
@@ -105,8 +116,8 @@ public class BigFraction
 		BigFraction result;  
 
 		// Build a new BigFraction object - send the products to the constructor.
-		result = new BigFraction (this.numerator * rhs.numerator, 
-				this.denominator * rhs.denominator);
+		result = new BigFraction (this.numerator.multiply(rhs.numerator), 
+				this.denominator.multiply(rhs.denominator));
 
 		// Pass the resulting BigFraction back to the caller.
 		return result; 
@@ -127,8 +138,8 @@ public class BigFraction
 		BigFraction result;
 
 		// Build a new BigFraction object - send the quotient to the constructor.
-		result = new BigFraction (this.numerator * rhs.denominator,
-				this.denominator * rhs.numerator);
+		result = new BigFraction (this.numerator.multiply(rhs.denominator),
+				this.denominator.multiply(rhs.numerator));
 
 		// Pass the resulting BigFraction back to the caller.
 		return result;
@@ -148,8 +159,8 @@ public class BigFraction
 		BigFraction result;
 
 		// Build a new BigFraction object - send the sum to the constructor.
-		result = new BigFraction ((this.numerator * rhs.denominator) + (rhs.numerator * this.denominator),
-				this.denominator * rhs.denominator);
+		result = new BigFraction ((this.numerator.multiply(rhs.denominator)).add((rhs.numerator).multiply(this.denominator)),
+				this.denominator.multiply(rhs.denominator));
 
 		// Pass the resulting BigFraction back to the caller.
 		return result;
@@ -168,8 +179,8 @@ public class BigFraction
 		BigFraction result;
 
 		// Build a new BigFraction object - send the different to the constructor.
-		result = new BigFraction ((this.numerator * rhs.denominator) - (rhs.numerator * this.denominator),
-				this.denominator * rhs.denominator);
+		result = new BigFraction ((this.numerator.multiply(rhs.denominator)).subtract((rhs.numerator.multiply(this.denominator))),
+				this.denominator.multiply(rhs.denominator));
 
 		// Pass the resulting BigFraction back to the caller.
 		return result;
@@ -181,7 +192,7 @@ public class BigFraction
 	 */
 	public double toDouble()
 	{
-		return (double)(this.numerator) / (double)(this.denominator);
+		return (this.numerator.divide(this.denominator)).doubleValue();
 	}
 
 }
